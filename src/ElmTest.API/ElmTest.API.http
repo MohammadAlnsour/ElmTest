@@ -1,0 +1,6 @@
+@ElmTest.API_HostAddress = http://localhost:5279
+
+GET {{ElmTest.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
