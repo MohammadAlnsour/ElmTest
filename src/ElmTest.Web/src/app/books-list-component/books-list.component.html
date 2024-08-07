@@ -10,7 +10,7 @@
     </span>
   </h3>
   <ul class="list-group mt-3"
-      style="overflow-y: auto;max-height:400px;">
+      style="overflow-y: auto;max-height:400px;" (scroll)="onScrollLoadData()" #uiElement>
     <li class="list-group-item" *ngFor="let book of books">
       <span><strong>{{book.bookTitle ? book.bookTitle : 'No Title entered'}}</strong></span>
       <span>{{book.bookDescription  ? book.bookDescription : 'No Desc entered'}}</span>

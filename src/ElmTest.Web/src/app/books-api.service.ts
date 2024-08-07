@@ -18,7 +18,7 @@ export class BooksApiService {
 
   public getBooks(pageIndex: number, pageSize: number) {
     let params = new HttpParams();
-    return this.http.get(`${this.baseUrl}/api/Book?pageNumber=${2}&pageSize=${pageSize}`, { headers: this.headers, params })
+    return this.http.get(`${this.baseUrl}/api/Book?pageNumber=${pageIndex}&pageSize=${pageSize}`, { headers: this.headers, params })
   }
 
 

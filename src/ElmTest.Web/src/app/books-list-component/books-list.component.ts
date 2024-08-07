@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { BooksApiService } from '../books-api.service';
 
 @Component({
@@ -12,6 +12,11 @@ export class BooksListComponent {
   public totalCount = 0;
   public pageIndex = 0;
   public pageSize = 10;
+  
+
+  @ViewChild('uiElement', { static: false }) public uiElement: ElementRef;
+
+  
 
   constructor(private BooksService: BooksApiService) {
 
@@ -31,5 +36,21 @@ export class BooksListComponent {
       console.log(error)
     }
   }
+
+  //public async onScrollLoadData() {
+  //  if (this.books.length !== this.totalCount) {
+  //    await this.getBooks(this.pageIndex, this.pageSize);
+  //    this.pageIndex += 1;
+  //  }
+  //}
+
+  public async onScrollLoadData() {
+    const nativeElement = this.uiElement.nativeElement
+    if (nativeElement.clientHeight + Math.round(nativeElement.scrollTop) === nativeElement.scrollHeight && this.books.length !== this.totalCount) {
+      await this.getBooks(this.pageIndex, this.pageSize);
+      this.pageIndex += 1;
+    }
+  }
+
 
 }
