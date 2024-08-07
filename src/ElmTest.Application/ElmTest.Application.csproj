@@ -15,7 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ElmTest.Application.Contracts\ElmTest.Application.Contracts.csproj" />
     <ProjectReference Include="..\ElmTest.Domain\ElmTest.Domain.csproj" />
-    <ProjectReference Include="..\ElmTest.SqlServer\ElmTest.SqlServer.csproj" />
+    <ProjectReference Include="..\ElmTest.SqlServer\ElmTest.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
