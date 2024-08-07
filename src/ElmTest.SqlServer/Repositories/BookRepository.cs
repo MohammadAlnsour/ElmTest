@@ -1,36 +1,43 @@
 ﻿using ElmTest.Domain.Entities;
+using ElmTest.Infrastructure.Dapper;
 
 namespace ElmTest.Infrastructure.Repositories
 {
     public class BookRepository : IBookRepository
     {
-        public bool Delete(Book entity)
+        private readonly IBookDbService _bookDbService;
+
+        public BookRepository(IBookDbService bookDbService)
+        {
+            _bookDbService = bookDbService;
+        }
+
+        public Task<bool> Delete(Book entity)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Book> Get(int id)
+        public Task<Book> Get(int id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Book> GetAll()
+        public Task<IEnumerable<Book>> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Book> GetPaged(int pageNumber, int pageSize)
+        public async Task<IEnumerable<Book>> GetPaged(int pageNumber, int pageSize)
         {
-            throw new NotImplementedException();
-
+            return await _bookDbService.GetBooksPagedAsync(pageNumber, pageSize);
         }
 
-        public long Insert(Book entity)
+        public Task<long> Insert(Book entity)
         {
             throw new NotImplementedException();
         }
 
-        public bool Update(Book entity)
+        public Task<bool> Update(Book entity)
         {
             throw new NotImplementedException();
         }

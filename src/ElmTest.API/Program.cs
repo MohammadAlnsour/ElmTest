@@ -2,8 +2,10 @@ using ElmTest.Application;
 using ElmTest.Application.Requests;
 using ElmTest.Application.Validators;
 using ElmTest.Domain.Factories;
+using ElmTest.Infrastructure.Dapper;
 using FluentValidation;
 using System;
+using ElmTest.Infrastructure;
 
 namespace ElmTest.API
 {
@@ -24,7 +26,7 @@ namespace ElmTest.API
             builder.Services.AddMediatr();
             builder.Services.AddScoped<IBookFactory,  BookFactory>();
             builder.Services.AddScoped<IValidator<CreateBookRequest>, CreateBookRequestValidator>();
-
+            builder.Services.AddDbServices();
 
             var app = builder.Build();
 

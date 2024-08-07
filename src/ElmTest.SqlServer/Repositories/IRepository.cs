@@ -9,11 +9,11 @@ namespace ElmTest.Infrastructure.Repositories
 {
     public interface IRepository<T> where T : IAggregateRoot
     {
-        IEnumerable<T> GetAll();
-        IEnumerable<T> GetPaged(int pageNumber, int pageSize);
-        IEnumerable<T> Get(int id);
-        long Insert(T entity);
-        bool Update(T entity);
-        bool Delete(T entity);
+        Task<IEnumerable<T>> GetAll();
+        Task<IEnumerable<Book>> GetPaged(int pageNumber, int pageSize);
+        Task<T> Get(int id);
+        Task<long> Insert(T entity);
+        Task<bool> Update(T entity);
+        Task<bool> Delete(T entity);
     }
 }
