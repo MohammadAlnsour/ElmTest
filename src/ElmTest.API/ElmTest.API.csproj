@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ElmTest.Application.Contracts\ElmTest.Application.Contracts.csproj" />
     <ProjectReference Include="..\ElmTest.Application\ElmTest.Application.csproj" />
+    <ProjectReference Include="..\ElmTest.Shared\ElmTest.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

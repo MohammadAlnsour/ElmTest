@@ -6,6 +6,7 @@ using ElmTest.Domain.Factories;
 using ElmTest.Infrastructure.Repositories;
 using FluentValidation;
 using MediatR;
+using StackExchange.Redis;
 
 namespace ElmTest.Application.Commands
 {
@@ -14,15 +15,18 @@ namespace ElmTest.Application.Commands
         private readonly IBookFactory _bookFactory;
         private readonly IMapper _mapper;
         private readonly IBookRepository _bookRepository;
+        private readonly IDatabase _redisDb;
 
-        public CreateBookCommandRequestHandler(IBookFactory bookFactory, IMapper mapper, IBookRepository bookRepository)
+        public CreateBookCommandRequestHandler(IBookFactory bookFactory, IMapper mapper, IBookRepository bookRepository, IDatabase redisDb)
         {
             _bookFactory = bookFactory;
             _mapper = mapper;
             _bookRepository = bookRepository;
+            _redisDb = redisDb;
         }
         public async Task<long> Handle(CreateBookRequest request, CancellationToken cancellationToken)
         {
+
             var bookInfo = _mapper.Map<CreateBookRequest, BookInfo>(request);
             var book = _bookFactory.CreateBook(bookInfo.BookTitle, bookInfo.BookDescription, bookInfo.Author, bookInfo.PublishDate, bookInfo.CoverBase64);
 

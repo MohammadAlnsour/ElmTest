@@ -6,6 +6,7 @@ using ElmTest.Infrastructure.Dapper;
 using FluentValidation;
 using System;
 using ElmTest.Infrastructure;
+using ElmTest.Shared;
 
 namespace ElmTest.API
 {
@@ -14,6 +15,10 @@ namespace ElmTest.API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            var config = new ConfigurationBuilder()
+                            .AddJsonFile("appsettings.json", optional: false)
+                            .Build();
 
             // Add services to the container.
 
@@ -27,6 +32,7 @@ namespace ElmTest.API
             builder.Services.AddScoped<IBookFactory,  BookFactory>();
             builder.Services.AddScoped<IValidator<CreateBookRequest>, CreateBookRequestValidator>();
             builder.Services.AddDbServices();
+            builder.Services.AddRedisConfig(config);
 
             var app = builder.Build();
 
