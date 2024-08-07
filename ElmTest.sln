@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Migrations", "Migrations\Migrations.csproj", "{9EE42FF9-5452-4CC5-9FF5-89BB33112CCC}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{788D1DA0-A801-4C59-AA56-18276FA62E0A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{F29F6457-E937-4397-914E-2480B9B5DAB7}"
@@ -43,10 +41,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9EE42FF9-5452-4CC5-9FF5-89BB33112CCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9EE42FF9-5452-4CC5-9FF5-89BB33112CCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9EE42FF9-5452-4CC5-9FF5-89BB33112CCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9EE42FF9-5452-4CC5-9FF5-89BB33112CCC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6E61397D-2885-4A11-9C42-97447630D4BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6E61397D-2885-4A11-9C42-97447630D4BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E61397D-2885-4A11-9C42-97447630D4BA}.Release|Any CPU.ActiveCfg = Release|Any CPU

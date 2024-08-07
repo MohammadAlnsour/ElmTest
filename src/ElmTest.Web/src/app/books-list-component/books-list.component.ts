@@ -12,11 +12,9 @@ export class BooksListComponent {
   public totalCount = 0;
   public pageIndex = 0;
   public pageSize = 10;
-  
 
-  @ViewChild('uiElement', { static: false }) public uiElement: ElementRef;
 
-  
+  @ViewChild('uiElement', { static: false }) uiElement: ElementRef<HTMLDivElement> = {} as ElementRef;
 
   constructor(private BooksService: BooksApiService) {
 

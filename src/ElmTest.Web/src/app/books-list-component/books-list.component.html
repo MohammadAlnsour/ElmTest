@@ -1,19 +1,215 @@
-<p>books-list-component works!</p>
+
+<style>
+
+  @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
+
+  body {
+    background-color: #3e94ec;
+    font-family: "Roboto", helvetica, arial, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    text-rendering: optimizeLegibility;
+  }
+
+  div.table-title {
+    display: block;
+    margin: auto;
+    max-width: 800px;
+    padding: 5px;
+    width: 100%;
+  }
+
+  .table-title h3 {
+    color: #fafafa;
+    font-size: 30px;
+    font-weight: 400;
+    font-style: normal;
+    font-family: "Roboto", helvetica, arial, sans-serif;
+    text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+    text-transform: uppercase;
+  }
 
 
+  /*** Table Styles **/
 
-<div class="container-fluid">
-  <h3 class="mt-2 mb-1">
-    List of books | Lazy loading
-    <span style="font-size: 12px;">
-      <strong>({{books.length}} of {{totalCount}})</strong>
-    </span>
-  </h3>
-  <ul class="list-group mt-3"
-      style="overflow-y: auto;max-height:400px;" (scroll)="onScrollLoadData()" #uiElement>
-    <li class="list-group-item" *ngFor="let book of books">
-      <span><strong>{{book.bookTitle ? book.bookTitle : 'No Title entered'}}</strong></span>
-      <span>{{book.bookDescription  ? book.bookDescription : 'No Desc entered'}}</span>
+  .table-fill {
+    background: white;
+    border-radius: 3px;
+    border-collapse: collapse;
+    /*height: 320px;*/
+    margin: auto;
+    max-width: 90%;
+    padding: 5px;
+    width: 100%;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    animation: float 5s infinite;
+  }
+
+  th {
+    color: #D5DDE5;
+    background: #1b1e24;
+    border-bottom: 4px solid #9ea7af;
+    border-right: 1px solid #343a45;
+    font-size: 23px;
+    font-weight: 100;
+    padding: 24px;
+    text-align: left;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    vertical-align: middle;
+  }
+
+    th:first-child {
+      border-top-left-radius: 3px;
+    }
+
+    th:last-child {
+      border-top-right-radius: 3px;
+      border-right: none;
+    }
+
+  tr {
+    border-top: 1px solid #C1C3D1;
+    border-bottom-: 1px solid #C1C3D1;
+    color: #666B85;
+    font-size: 16px;
+    font-weight: normal;
+    text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
+  }
+
+    tr:hover td {
+      background: #4E5066;
+      color: #FFFFFF;
+      border-top: 1px solid #22262e;
+    }
+
+    tr:first-child {
+      border-top: none;
+    }
+
+    tr:last-child {
+      border-bottom: none;
+    }
+
+    tr:nth-child(odd) td {
+      background: #EBEBEB;
+    }
+
+    tr:nth-child(odd):hover td {
+      background: #4E5066;
+    }
+
+    tr:last-child td:first-child {
+      border-bottom-left-radius: 3px;
+    }
+
+    tr:last-child td:last-child {
+      border-bottom-right-radius: 3px;
+    }
+
+  td {
+    background: #FFFFFF;
+    padding: 20px;
+    text-align: left;
+    vertical-align: middle;
+    font-weight: 300;
+    font-size: 18px;
+    text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+    border-right: 1px solid #C1C3D1;
+  }
+
+    td:last-child {
+      border-right: 0px;
+    }
+
+  th.text-left {
+    text-align: left;
+  }
+
+  th.text-center {
+    text-align: center;
+  }
+
+  th.text-right {
+    text-align: right;
+  }
+
+  td.text-left {
+    text-align: left;
+  }
+
+  td.text-center {
+    text-align: center;
+  }
+
+  td.text-right {
+    text-align: right;
+  }
+
+  th {
+    position: sticky;
+    top: 0;
+  }
+
+
+  ul {
+    list-style-type: none;
+  }
+  img {
+    border-radius: 50%;
+  }
+</style>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Table Style</title>
+  <meta name="viewport" content="initial-scale=1.0; maximum-scale=1.0; width=device-width;">
+</head>
+
+<body>
+  <div class="table-title">
+    <h3> List of books | Lazy loading</h3>
+  </div>
+
+  <!--<ul
+      >
+
+    <li>
+
     </li>
-  </ul>
-</div>
+
+  </ul>-->
+  <div style="overflow-y: auto;max-height:570px;" (scroll)="onScrollLoadData()" #uiElement>
+    <table class="table-fill">
+      <thead>
+        <tr>
+          <th>Book Id</th>
+          <th>Image</th>
+          <th>Book Title</th>
+          <th>Author</th>
+          <th>Publish Date</th>
+        </tr>
+      </thead>
+      <tbody class="table-hover">
+        <tr *ngFor="let book of books" class="active-row">
+          <td class="text-left">{{book.bookId}}</td>
+          <td class="text-left"><img src="{{book.coverBase64}}" width="100px" height="100px" /></td>
+          <td class="text-left">{{book.bookTitle ? book.bookTitle : 'No Title entered'}}</td>
+          <td class="text-left">{{book.author ? book.author : 'No author entered'}}</td>
+          <td class="text-left">{{book.publishDate | date: 'dd-MM-yyyy'}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <table class="table-fill">
+  </table>
+
+
+
+
+
+</body>
+</html>
+
+

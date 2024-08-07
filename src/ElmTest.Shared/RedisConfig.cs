@@ -4,7 +4,7 @@ using StackExchange.Redis;
 
 namespace ElmTest.Shared
 {
-    public static class DependencyInjection
+    public static class RedisConfig
     {
         public static IServiceCollection AddRedisConfig(this IServiceCollection services, IConfiguration configuration)
         {
