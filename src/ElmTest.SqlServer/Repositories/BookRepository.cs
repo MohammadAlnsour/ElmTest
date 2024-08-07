@@ -22,6 +22,7 @@ namespace ElmTest.Infrastructure.Repositories
         public IEnumerable<Book> GetPaged(int pageNumber, int pageSize)
         {
             throw new NotImplementedException();
+
         }
 
         public long Insert(Book entity)
