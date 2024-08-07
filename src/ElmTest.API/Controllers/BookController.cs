@@ -4,6 +4,7 @@ using ElmTest.Application.Requests;
 using ElmTest.Domain.Consts;
 using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -23,10 +24,12 @@ namespace ElmTest.API.Controllers
         }
 
         [HttpGet(Name = "GetBookPagination")]
+        [EnableCors("AllowAll")]
         public async Task<ApiResponse<IEnumerable<BookReponseDTO>>> Get(int? pageNumber, int? pageSize)
         {
             try
             {
+                if (pageNumber != null && pageNumber == 0) pageNumber = 1;
                 var response = await _mediator.Send(new GetBooksPaginationRequest() { PageNumber = pageNumber ?? 1, PageSize = pageSize ?? 10 });
                 return ApiResponse<IEnumerable<BookReponseDTO>>.IsSuccess(response, "Request succeed", ApiStatusCodes.Success.ToString());
             }
@@ -37,6 +40,7 @@ namespace ElmTest.API.Controllers
         }
 
         [HttpPost("PostBook")]
+        [EnableCors("AllowAll")]
         public async Task<ApiResponse<long>> PostBook(CreateBookRequest createBookRequest)
         {
             try

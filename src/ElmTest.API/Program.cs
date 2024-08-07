@@ -21,7 +21,7 @@ namespace ElmTest.API
                             .Build();
 
             // Add services to the container.
-
+            builder.Services.AddCors();
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -29,7 +29,7 @@ namespace ElmTest.API
 
             builder.Services.AddAutoMapper(typeof(ApiMapperProfile));
             builder.Services.AddMediatr();
-            builder.Services.AddScoped<IBookFactory,  BookFactory>();
+            builder.Services.AddScoped<IBookFactory, BookFactory>();
             builder.Services.AddScoped<IValidator<CreateBookRequest>, CreateBookRequestValidator>();
             builder.Services.AddDbServices();
             builder.Services.AddRedisConfig(config);
@@ -43,15 +43,20 @@ namespace ElmTest.API
                 app.UseSwaggerUI();
             }
 
-
-           
             app.UseHttpsRedirection();
-            app.UseAuthentication();
             app.UseRouting();
-            app.UseAuthorization();
-            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-            app.MapControllers();
+            //app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
+            app.UseCors(builder => builder
+               .AllowAnyHeader()
+               .AllowAnyMethod()
+               .SetIsOriginAllowed((host) => true)
+               .AllowCredentials()
+               );
+
+            //app.UseAuthentication();
+            //app.UseAuthorization();
+            app.MapControllers();
             app.Run();
         }
     }

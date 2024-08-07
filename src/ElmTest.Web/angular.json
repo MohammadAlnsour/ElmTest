@@ -72,7 +72,8 @@
               "buildTarget": "ElmTest.Web:build:production"
             },
             "development": {
-              "buildTarget": "ElmTest.Web:build:development"
+              "buildTarget": "ElmTest.Web:build:development",
+              "proxyConfig": "proxy.conf.js"
             }
           },
           "defaultConfiguration": "development"
