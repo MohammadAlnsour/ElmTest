@@ -11,7 +11,8 @@ export class BooksApiService {
     'Content-Type': 'application/json',
     'Accept': "application/json",
     'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE',
-    'Authorization': ''
+    'Authorization': '',
+    'api-key': '6bd870cd-ed9c-42d0-97d9-975f7126f7ea',
   });
 
   constructor(private http: HttpClient) { }

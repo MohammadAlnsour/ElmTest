@@ -7,6 +7,8 @@ using FluentValidation;
 using System;
 using ElmTest.Infrastructure;
 using ElmTest.Shared;
+using ElmTest.API.Middlewares;
+using Serilog;
 
 namespace ElmTest.API
 {
@@ -33,6 +35,7 @@ namespace ElmTest.API
             builder.Services.AddScoped<IValidator<CreateBookRequest>, CreateBookRequestValidator>();
             builder.Services.AddDbServices();
             builder.Services.AddRedisConfig(config);
+            builder.AddSerilogConfig(config);
 
             var app = builder.Build();
 
@@ -45,6 +48,9 @@ namespace ElmTest.API
 
             app.UseHttpsRedirection();
             app.UseRouting();
+
+            app.UseSerilogRequestLogging();
+
             //app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseCors(builder => builder
@@ -57,6 +63,9 @@ namespace ElmTest.API
             //app.UseAuthentication();
             //app.UseAuthorization();
             app.MapControllers();
+            app.UseApiKeyMiddleware();
+            app.UseErrorLogMiddleware();
+
             app.Run();
         }
     }
