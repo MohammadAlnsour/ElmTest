@@ -12,6 +12,7 @@ export class BooksListComponent {
   public totalCount = 0;
   public pageIndex = 0;
   public pageSize = 10;
+  public showloader = false;
 
 
   @ViewChild('uiElement', { static: false }) uiElement: ElementRef<HTMLDivElement> = {} as ElementRef;
@@ -43,10 +44,14 @@ export class BooksListComponent {
   //}
 
   public async onScrollLoadData() {
-    const nativeElement = this.uiElement.nativeElement
+    const nativeElement = this.uiElement.nativeElement;
+
     if (nativeElement.clientHeight + Math.round(nativeElement.scrollTop) === nativeElement.scrollHeight && this.books.length !== this.totalCount) {
+      this.showloader = true;
+      await new Promise(f => setTimeout(f, 1000));
       await this.getBooks(this.pageIndex, this.pageSize);
       this.pageIndex += 1;
+      this.showloader = false;
     }
   }
 

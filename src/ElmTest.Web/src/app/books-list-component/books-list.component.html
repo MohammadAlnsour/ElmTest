@@ -9,6 +9,8 @@
     font-size: 16px;
     font-weight: 400;
     text-rendering: optimizeLegibility;
+    margin: 0;
+    height: 100%;
   }
 
   div.table-title {
@@ -154,8 +156,42 @@
   ul {
     list-style-type: none;
   }
+
   img {
     border-radius: 50%;
+  }
+
+  .loaderContainer {
+    position: fixed;
+    left: 40%;
+    top: 30%;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+  }
+
+  .loadInnerContainer {
+    background-color: #3e94ec;
+    width: 90px;
+  }
+
+  .loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
   }
 </style>
 
@@ -171,14 +207,6 @@
     <h3> List of books | Lazy loading</h3>
   </div>
 
-  <!--<ul
-      >
-
-    <li>
-
-    </li>
-
-  </ul>-->
   <div style="overflow-y: auto;max-height:570px;" (scroll)="onScrollLoadData()" #uiElement>
     <table class="table-fill">
       <thead>
@@ -202,12 +230,12 @@
     </table>
   </div>
 
-  <table class="table-fill">
-  </table>
-
-
-
-
+  <div class="loaderContainer" *ngIf="showloader">
+    <div class="loadInnerContainer">
+      <div class="loader"></div>
+      <label style="color:white;">Loading...</label>
+    </div>
+  </div>
 
 </body>
 </html>
