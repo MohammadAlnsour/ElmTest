@@ -2,11 +2,11 @@
 using ElmTest.Application.Contracts.DTOs;
 using ElmTest.Application.Requests;
 using ElmTest.Domain.Consts;
+using ElmTest.Shared.AppExceptions;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 
 namespace ElmTest.API.Controllers
 {
@@ -16,11 +16,13 @@ namespace ElmTest.API.Controllers
     {
         private readonly IMediator _mediator;
         private readonly IValidator<CreateBookRequest> _validator;
+        private readonly Serilog.ILogger _logger;
 
-        public BookController(IMediator mediator, IValidator<CreateBookRequest> validator)
+        public BookController(IMediator mediator, IValidator<CreateBookRequest> validator, Serilog.ILogger logger)
         {
             _mediator = mediator;
             _validator = validator;
+            _logger = logger;
         }
 
         [HttpGet(Name = "GetBookPagination")]
@@ -30,11 +32,13 @@ namespace ElmTest.API.Controllers
             try
             {
                 if (pageNumber != null && pageNumber == 0) pageNumber = 1;
-                var response = await _mediator.Send(new GetBooksPaginationRequest() { PageNumber = pageNumber ?? 1, PageSize = pageSize ?? 10 });
+                var getBooksRequest = new GetBooksPaginationRequest(pageNumber ?? 1, pageSize ?? 10);
+                var response = await _mediator.Send(getBooksRequest);
                 return ApiResponse<IEnumerable<BookReponseDTO>>.IsSuccess(response, "Request succeed", ApiStatusCodes.Success.ToString());
             }
             catch (Exception ex)
             {
+                ex.HandleException(_logger);
                 return ApiResponse<IEnumerable<BookReponseDTO>>.IsFailed($"error occued {ex.Message}", ApiStatusCodes.Error.ToString());
             }
         }
@@ -58,6 +62,7 @@ namespace ElmTest.API.Controllers
             }
             catch (Exception ex)
             {
+                ex.HandleException(_logger);
                 return ApiResponse<long>.IsFailed($"error occued {ex.Message}", ApiStatusCodes.Error.ToString());
             }
         }
