@@ -4,8 +4,10 @@ using ElmTest.Application.Requests;
 using ElmTest.Domain.Entities;
 using ElmTest.Domain.Factories;
 using ElmTest.Infrastructure.Repositories;
+using ElmTest.Shared.AppExceptions;
 using MediatR;
 using Newtonsoft.Json;
+using Serilog;
 using StackExchange.Redis;
 
 namespace ElmTest.Application.Queries
@@ -16,17 +18,23 @@ namespace ElmTest.Application.Queries
         private readonly IMapper _mapper;
         private readonly IBookRepository _bookRepository;
         private readonly IDatabase _redisDb;
+        private readonly ILogger _logger;
 
-        public GetBooksQueryPaginationRequestHandler(IBookFactory bookFactory, IMapper mapper, IBookRepository bookRepository, IDatabase redisDb)
+        public GetBooksQueryPaginationRequestHandler(
+            IBookFactory bookFactory,
+            IMapper mapper,
+            IBookRepository bookRepository,
+            IDatabase redisDb,
+            ILogger logger)
         {
             _bookFactory = bookFactory;
             _mapper = mapper;
             _bookRepository = bookRepository;
             _redisDb = redisDb;
+            _logger = logger;
         }
         public async Task<IEnumerable<BookReponseDTO>> Handle(GetBooksPaginationRequest request, CancellationToken cancellationToken)
         {
-
             var booksPagedJson = await _redisDb.StringGetAsync($"Book_{request.PageNumber}");
             if (!booksPagedJson.IsNullOrEmpty)
             {
@@ -35,10 +43,18 @@ namespace ElmTest.Application.Queries
             }
             else
             {
-                var dbBooks = await _bookRepository.GetPaged(request.PageNumber, request.PageSize);
-                var booksDTOs = MapBooks(dbBooks);
-                await _redisDb.StringSetAsync($"Book_{request.PageNumber}", JsonConvert.SerializeObject(booksDTOs));
-                return booksDTOs;
+                try
+                {
+                    var dbBooks = await _bookRepository.GetPaged(request.PageNumber, request.PageSize);
+                    var booksDTOs = MapBooks(dbBooks);
+                    await _redisDb.StringSetAsync($"Book_{request.PageNumber}", JsonConvert.SerializeObject(booksDTOs));
+                    return booksDTOs;
+                }
+                catch (Exception ex)
+                {
+                    ex.HandleException(_logger);
+                    throw;
+                }
             }
         }
         private IEnumerable<BookReponseDTO> MapBooks(IEnumerable<Book> books)
@@ -61,8 +77,9 @@ namespace ElmTest.Application.Queries
                     };
                     return bookDto;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    ex.HandleException(_logger);
                     throw;
                 }
             }
