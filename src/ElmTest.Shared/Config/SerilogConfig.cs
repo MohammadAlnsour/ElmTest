@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Serilog;
 
-namespace ElmTest.Shared
+namespace ElmTest.Shared.Config
 {
     public static class SerilogConfig
     {

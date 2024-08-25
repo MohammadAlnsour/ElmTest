@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
 
-namespace ElmTest.Shared
+namespace ElmTest.Shared.Config
 {
     public static class RedisConfig
     {
@@ -11,7 +11,7 @@ namespace ElmTest.Shared
             var redisServer = configuration["redis:server"];
             var redisServerPassword = configuration["redis:password"];
 
-            services.AddScoped<IDatabase>(cfg =>
+            services.AddScoped(cfg =>
              {
                  IConnectionMultiplexer multiplexer = ConnectionMultiplexer.Connect($"{redisServer}");
                  return multiplexer.GetDatabase();

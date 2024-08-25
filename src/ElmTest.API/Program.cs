@@ -6,9 +6,9 @@ using ElmTest.Infrastructure.Dapper;
 using FluentValidation;
 using System;
 using ElmTest.Infrastructure;
-using ElmTest.Shared;
 using ElmTest.API.Middlewares;
 using Serilog;
+using ElmTest.Shared.Config;
 
 namespace ElmTest.API
 {
