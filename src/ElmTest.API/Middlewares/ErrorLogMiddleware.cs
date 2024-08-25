@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Serilog;
+﻿using ElmTest.Shared.AppExceptions;
 
 namespace ElmTest.API.Middlewares
 {
@@ -21,7 +20,7 @@ namespace ElmTest.API.Middlewares
             }
             catch (Exception ex)
             {
-                _logger.Error($"Exception occured : {ex.Message}  stackTrace {ex.StackTrace}");
+                ex.HandleException(_logger);
                 throw;
             }
         }
