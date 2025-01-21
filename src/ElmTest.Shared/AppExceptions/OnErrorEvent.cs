@@ -1,4 +1,6 @@
-﻿namespace ElmTest.Shared.AppExceptions
+﻿using ElmTest.Shared.AppExceptions.ExpNotParties;
+
+namespace ElmTest.Shared.AppExceptions
 {
     public class OnErrorEvent
     {

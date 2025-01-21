@@ -1,4 +1,5 @@
-﻿using Serilog;
+﻿using ElmTest.Shared.AppExceptions.ExpNotParties;
+using Serilog;
 
 namespace ElmTest.Shared.AppExceptions
 {

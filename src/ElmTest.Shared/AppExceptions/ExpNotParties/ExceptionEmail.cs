@@ -1,4 +1,4 @@
-﻿namespace ElmTest.Shared.AppExceptions
+﻿namespace ElmTest.Shared.AppExceptions.ExpNotParties
 {
     public class ExceptionEmail : IErrorNotificationParty
     {
